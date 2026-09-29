@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Beyblade X 雙人數位計分板</title>
+    <title>Beyblade X Multi-Player Digital Scoreboard</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts for Futuristic Cyber Aesthetics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -16,174 +23,163 @@
                     colors: {
                         bx: {
                             green: '#00FF66',
-                            greenGlow: 'rgba(0, 255, 102, 0.4)',
                             cyan: '#00E5FF',
-                            pink: '#FF0055',
-                            gold: '#FFD700',
-                            dark: '#0B0D13',
-                            card: '#121622',
-                            cardBorder: '#1A2333',
+                            pink: '#FF0077',
+                            gold: '#FFC700',
+                            dark: '#0a0c10',
+                            card: '#111520',
+                            border: '#1b2234',
                             fail: '#FF9900'
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        mono: ['Courier New', 'monospace']
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        sans: ['Noto Sans TC', 'Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+
     <style>
-        /* Custom Beyblade X Angled Clip Paths & Animations */
         .clip-angled-sm {
-            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
         }
         .clip-angled-lg {
-            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-        }
-        .clip-angled-left {
-            clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px);
-        }
-        .clip-angled-right {
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
         }
         
-        /* Cyber Neon Lights & Effects */
-        .neon-glow-green {
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.35), inset 0 0 10px rgba(0, 255, 102, 0.2);
-        }
-        .neon-glow-pink {
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.35), inset 0 0 10px rgba(255, 0, 85, 0.2);
-        }
-        .neon-text-green {
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.7);
-        }
-        .neon-text-pink {
-            text-shadow: 0 0 10px rgba(255, 0, 85, 0.7);
-        }
-        .neon-text-cyan {
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
-        }
+        /* Dynamic Theme Neon Shadows */
+        .neon-p1 { box-shadow: 0 0 15px rgba(0, 255, 102, 0.25), inset 0 0 10px rgba(0, 255, 102, 0.1); }
+        .neon-p2 { box-shadow: 0 0 15px rgba(0, 229, 255, 0.25), inset 0 0 10px rgba(0, 229, 255, 0.1); }
+        .neon-p3 { box-shadow: 0 0 15px rgba(255, 0, 119, 0.25), inset 0 0 10px rgba(255, 0, 119, 0.1); }
+        .neon-p4 { box-shadow: 0 0 15px rgba(255, 199, 0, 0.25), inset 0 0 10px rgba(255, 199, 0, 0.1); }
 
-        /* Background Diagonal Cyber Mesh */
-        .bg-bx-pattern {
-            background-color: #0b0d13;
+        .text-glow-green { text-shadow: 0 0 12px rgba(0, 255, 102, 0.8); }
+        .text-glow-cyan { text-shadow: 0 0 12px rgba(0, 229, 255, 0.8); }
+        .text-glow-pink { text-shadow: 0 0 12px rgba(255, 0, 119, 0.8); }
+        .text-glow-gold { text-shadow: 0 0 12px rgba(255, 199, 0, 0.8); }
+
+        /* Background Sci-Fi Grid Pattern */
+        .bg-bx-mesh {
+            background-color: #0a0c10;
             background-image: 
-                linear-gradient(135deg, rgba(0, 255, 102, 0.03) 25%, transparent 25%), 
-                linear-gradient(225deg, rgba(0, 255, 102, 0.03) 25%, transparent 25%), 
-                linear-gradient(45deg, rgba(0, 229, 255, 0.02) 25%, transparent 25%), 
-                linear-gradient(315deg, rgba(255, 0, 85, 0.02) 25%, transparent 25%);
-            background-size: 40px 40px;
-            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 102, 0.08) 0%, transparent 60%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
+                linear-gradient(225deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
+                linear-gradient(45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
+                linear-gradient(315deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%);
+            background-size: 100% 100%, 30px 30px, 30px 30px, 30px 30px, 30px 30px;
         }
 
-        /* Pulse animation for Fail Light */
+        /* Pulse and Animations */
         @keyframes pulse-fast {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.92); }
+            50% { opacity: 0.4; transform: scale(0.9); }
         }
-        .animate-pulse-fast {
-            animation: pulse-fast 0.6s infinite ease-in-out;
-        }
+        .animate-pulse-fast { animation: pulse-fast 0.6s infinite ease-in-out; }
 
-        /* Countdown overlay popup keyframe */
-        @keyframes countdown-pop {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.15); opacity: 1; }
+        @keyframes pop-in {
+            0% { transform: scale(0.6); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
-        .animate-pop {
-            animation: countdown-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .animate-pop { animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
-        /* Toast Popup entrance */
-        @keyframes toast-slide-down {
+        @keyframes toast-slide {
             0% { transform: translateY(-100%) translateX(-50%); opacity: 0; }
             100% { transform: translateY(0) translateX(-50%); opacity: 1; }
         }
-        .animate-toast {
-            animation: toast-slide-down 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .animate-toast { animation: toast-slide 0.35s ease-out forwards; }
 
-        /* Prevent unwanted highlighting on quick mobile taps */
         * {
             -webkit-tap-highlight-color: transparent;
             user-select: none;
         }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0c10; }
+        ::-webkit-scrollbar-thumb { background: #1b2234; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00FF66; }
     </style>
 </head>
-<body class="bg-bx-pattern text-slate-100 min-h-screen flex flex-col justify-between font-sans overflow-x-hidden antialiased">
 
-    <!-- TOP HEADER / CONTROL BAR -->
-    <header class="w-full bg-slate-950/80 border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-30 px-4 py-3 shadow-lg">
-        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+<body class="bg-bx-mesh text-slate-100 min-h-screen flex flex-col justify-between font-sans overflow-x-hidden antialiased">
+
+    <header class="w-full bg-slate-950/90 border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-30 px-3 sm:px-6 py-2.5 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
             
             <!-- Logo & Title -->
             <div class="flex items-center space-x-3">
-                <div class="relative flex items-center justify-center w-10 h-10 bg-gradient-to-br from-bx-green to-bx-cyan rounded-lg p-[2px] shadow-[0_0_12px_rgba(0,255,102,0.5)]">
-                    <div class="w-full h-full bg-slate-950 rounded-[6px] flex items-center justify-center">
-                        <i data-lucide="zap" class="w-6 h-6 text-bx-green"></i>
+                <div class="relative flex items-center justify-center w-10 h-10 bg-gradient-to-br from-bx-green via-bx-cyan to-bx-pink rounded-xl p-[2px] shadow-[0_0_15px_rgba(0,255,102,0.4)]">
+                    <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-bx-green"></i>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-lg font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-bx-green via-bx-cyan to-white uppercase italic">
+                    <h1 class="text-base sm:text-lg font-black font-orbitron tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-bx-green via-bx-cyan to-white uppercase italic">
                         BEYBLADE X
                     </h1>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest font-mono">Digital Match Referee</p>
+                    <p class="text-[10px] text-slate-400 font-mono tracking-widest uppercase">Multi-Player Referee System</p>
                 </div>
             </div>
 
-            <!-- Match Settings & Status Bar -->
-            <div class="flex items-center space-x-2 sm:space-x-4 bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5 shadow-inner">
-                <!-- Target Score Selector -->
-                <div class="flex items-center space-x-1.5 border-r border-slate-800 pr-3">
-                    <span class="text-xs text-slate-400 font-mono uppercase">目標:</span>
-                    <select id="targetScoreSelect" onchange="changeTargetScore(this.value)" class="bg-slate-950 text-bx-green font-bold text-xs rounded border border-slate-700 px-2 py-1 outline-none focus:border-bx-green transition">
-                        <option value="3">3 分制</option>
-                        <option value="4" selected>4 分制 (標準)</option>
-                        <option value="5">5 分制</option>
-                        <option value="7">7 分制</option>
+            <!-- Mode Switcher & Target Score Selector -->
+            <div class="flex items-center space-x-2 sm:space-x-4 bg-slate-900/90 border border-slate-800 rounded-xl p-1 shadow-inner">
+                
+                <!-- Player Mode Tabs (2P / 3P / 4P) -->
+                <div class="flex items-center bg-slate-950 rounded-lg p-0.5 border border-slate-800">
+                    <button onclick="setPlayerCount(2)" id="mode2PBtn" class="px-2.5 py-1 text-xs font-bold font-mono rounded-md transition duration-200">2P</button>
+                    <button onclick="setPlayerCount(3)" id="mode3PBtn" class="px-2.5 py-1 text-xs font-bold font-mono rounded-md transition duration-200">3P</button>
+                    <button onclick="setPlayerCount(4)" id="mode4PBtn" class="px-2.5 py-1 text-xs font-bold font-mono rounded-md transition duration-200">4P</button>
+                </div>
+
+                <!-- Target Score Select -->
+                <div class="flex items-center space-x-1.5 border-l border-slate-800 pl-2 sm:pl-3">
+                    <span class="text-[11px] text-slate-400 font-mono hidden sm:inline uppercase">目標:</span>
+                    <select id="targetScoreSelect" onchange="changeTargetScore(this.value)" class="bg-slate-950 text-bx-green font-bold text-xs rounded-md border border-slate-700 px-2 py-1 outline-none focus:border-bx-green transition">
+                        <option value="3">3 分</option>
+                        <option value="4" selected>4 分 (標準)</option>
+                        <option value="5">5 分</option>
+                        <option value="7">7 分</option>
+                        <option value="10">10 分</option>
                     </select>
                 </div>
 
-                <!-- Match Timer Display -->
-                <div class="flex items-center space-x-2 font-mono">
-                    <i data-lucide="timer" class="w-4 h-4 text-bx-cyan"></i>
-                    <span id="timerDisplay" class="text-sm font-bold text-slate-200 w-12 text-center">00:00</span>
-                    <button onclick="toggleTimer()" id="timerToggleBtn" class="text-xs text-slate-400 hover:text-bx-cyan p-1 transition" title="開關計時">
+                <!-- Timer Bar -->
+                <div class="flex items-center space-x-1.5 border-l border-slate-800 pl-2 sm:pl-3 font-mono">
+                    <span id="timerDisplay" class="text-xs font-bold text-slate-200 w-11 text-center">00:00</span>
+                    <button onclick="toggleTimer()" id="timerToggleBtn" class="text-slate-400 hover:text-bx-cyan p-1 transition" title="計時開關">
                         <i data-lucide="play" class="w-3.5 h-3.5" id="timerIcon"></i>
                     </button>
-                    <button onclick="resetTimer()" class="text-xs text-slate-400 hover:text-rose-400 p-1 transition" title="重置時間">
+                    <button onclick="resetTimer()" class="text-slate-400 hover:text-rose-400 p-1 transition" title="重置時間">
                         <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
                     </button>
                 </div>
 
                 <!-- Audio Toggle -->
-                <button onclick="toggleMute()" id="audioBtn" class="p-1.5 text-slate-300 hover:text-bx-green bg-slate-800/60 rounded-lg border border-slate-700 transition" title="音效切換">
+                <button onclick="toggleMute()" id="audioBtn" class="p-1.5 text-slate-300 hover:text-bx-green bg-slate-950 rounded-lg border border-slate-800 transition" title="音效切換">
                     <i data-lucide="volume-2" class="w-4 h-4" id="audioIcon"></i>
                 </button>
             </div>
 
-            <!-- Reset / Match Controls -->
-            <div class="flex items-center space-x-2">
-                <button onclick="confirmResetAll()" class="flex items-center space-x-1.5 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/50 text-rose-300 text-xs font-semibold px-3 py-2 rounded-lg transition active:scale-95 shadow-sm">
-                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                    <span class="hidden sm:inline">全新對戰</span>
-                </button>
-            </div>
+            <!-- Global Action Reset -->
+            <button onclick="confirmResetAll()" class="flex items-center space-x-1 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/60 text-rose-300 text-xs font-semibold px-3 py-2 rounded-lg transition active:scale-95 shadow-sm">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">全新重置</span>
+            </button>
         </div>
     </header>
 
-    <!-- TOAST NOTIFICATION POPUP (For Launch Fail & Important Events) -->
-    <div id="toastNotification" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden max-w-md w-11/12 bg-slate-900/95 border-2 border-bx-fail text-slate-100 p-4 rounded-xl shadow-[0_10px_30px_rgba(255,153,0,0.4)] animate-toast backdrop-blur-md">
+    <div id="toastNotification" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden max-w-md w-11/12 bg-slate-900/95 border-2 border-bx-fail text-slate-100 p-3.5 rounded-xl shadow-[0_10px_30px_rgba(255,153,0,0.4)] animate-toast backdrop-blur-md">
         <div class="flex items-start space-x-3">
-            <div class="p-2 bg-bx-fail/20 text-bx-fail rounded-lg border border-bx-fail/40 flex-shrink-0">
-                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            <div id="toastIconContainer" class="p-2 bg-bx-fail/20 text-bx-fail rounded-lg border border-bx-fail/40 flex-shrink-0">
+                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
             </div>
             <div class="flex-1">
-                <h4 id="toastTitle" class="font-bold text-sm text-bx-fail tracking-wide uppercase">系統提示</h4>
-                <p id="toastMessage" class="text-xs text-slate-200 mt-1 leading-relaxed">提示訊息內容...</p>
+                <h4 id="toastTitle" class="font-bold text-xs font-orbitron text-bx-fail tracking-wide uppercase">系統提示</h4>
+                <p id="toastMessage" class="text-xs text-slate-200 mt-0.5 leading-relaxed">提示訊息內容...</p>
             </div>
             <button onclick="closeToast()" class="text-slate-400 hover:text-white p-1">
                 <i data-lucide="x" class="w-4 h-4"></i>
@@ -191,296 +187,86 @@
         </div>
     </div>
 
-    <!-- MAIN SCOREBOARD CONTAINER -->
-    <main class="flex-1 max-w-6xl w-full mx-auto p-3 sm:p-6 flex flex-col justify-center">
+    <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 flex flex-col justify-center">
         
-        <!-- Round Info Header -->
-        <div class="text-center mb-3 sm:mb-6">
-            <div class="inline-flex items-center space-x-3 bg-slate-900/90 border border-slate-800 px-5 py-1.5 rounded-full shadow-lg">
-                <span class="text-xs font-mono text-slate-400">CURRENT ROUND</span>
-                <span id="currentRoundText" class="text-base font-black text-bx-cyan font-mono tracking-widest">ROUND 1</span>
+        <!-- Round Banner -->
+        <div class="text-center mb-4 sm:mb-6">
+            <div class="inline-flex items-center space-x-3 bg-slate-900/90 border border-slate-800 px-6 py-1.5 rounded-full shadow-lg">
+                <span class="text-xs font-mono text-slate-400 uppercase tracking-widest">ROUND</span>
+                <span id="currentRoundText" class="text-lg font-black font-orbitron text-bx-green text-glow-green tracking-widest">R1</span>
             </div>
         </div>
 
-        <!-- PLAYERS DUAL DISPLAY GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 relative">
-
-            <!-- VS Center Badge (Desktop Only) -->
-            <div class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-slate-950 border-2 border-slate-700 items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.8)]">
-                <span class="text-sm font-black italic text-transparent bg-clip-text bg-gradient-to-r from-bx-cyan to-bx-pink">VS</span>
-            </div>
-
-            <!-- ================= PLAYER 01 (LEFT CARD / CYAN THEME) ================= -->
-            <div class="bg-gradient-to-b from-slate-900/90 to-slate-950/90 border-2 border-slate-800 hover:border-bx-cyan/50 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden transition-all duration-300 clip-angled-left">
-                <!-- Top Accent Stripe -->
-                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bx-cyan via-bx-green to-transparent"></div>
-
-                <!-- Player Header -->
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-2">
-                        <span class="px-2.5 py-1 bg-bx-cyan/10 border border-bx-cyan/30 text-bx-cyan text-xs font-bold rounded uppercase tracking-wider">P1</span>
-                        <input type="text" id="p1Name" value="PLAYER 01" onchange="updatePlayerNames()" class="bg-transparent border-b border-transparent hover:border-slate-700 focus:border-bx-cyan text-lg font-bold text-slate-100 outline-none w-32 sm:w-40 transition">
-                    </div>
-                    
-                    <!-- LAUNCH FAIL INDICATORS (PLAYER 1) -->
-                    <div class="flex flex-col items-end">
-                        <div class="flex items-center space-x-1 mb-1">
-                            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-tight">Launch Fail</span>
-                            <i data-lucide="alert-circle" class="w-3 h-3 text-bx-fail"></i>
-                        </div>
-                        <div class="flex items-center space-x-2 bg-slate-950/80 p-1.5 rounded-lg border border-slate-800/80">
-                            <!-- Indicator Light 1 -->
-                            <div id="p1FailLight1" class="w-4 h-4 rounded-full bg-slate-800 border border-slate-700 transition-all duration-300 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-transparent"></div>
-                            </div>
-                            <!-- Indicator Light 2 -->
-                            <div id="p1FailLight2" class="w-4 h-4 rounded-full bg-slate-800 border border-slate-700 transition-all duration-300 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-transparent"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Score Display P1 -->
-                <div class="flex items-center justify-between my-4 bg-slate-950/60 rounded-xl p-4 border border-slate-800/60 shadow-inner">
-                    <button onclick="adjustScore(1, -1)" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center justify-center transition active:scale-95">
-                        <i data-lucide="minus" class="w-5 h-5"></i>
-                    </button>
-                    <div class="text-center">
-                        <div id="p1Score" class="text-6xl sm:text-7xl font-black font-mono text-bx-cyan neon-text-cyan leading-none">0</div>
-                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-1 block">PTS</span>
-                    </div>
-                    <button onclick="adjustScore(1, 1)" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center justify-center transition active:scale-95">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
-                    </button>
-                </div>
-
-                <!-- LAUNCH FAIL TRIGGER BUTTON (P1) -->
-                <div class="mb-4">
-                    <button onclick="handleLaunchFail(1)" class="w-full bg-gradient-to-r from-amber-950/40 via-amber-900/30 to-amber-950/40 hover:from-amber-900/60 hover:to-amber-800/60 border border-amber-600/50 hover:border-amber-500 text-amber-200 font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center space-x-2 group shadow-md active:scale-98">
-                        <i data-lucide="disc-3" class="w-4 h-4 text-amber-400 group-hover:rotate-180 transition-transform duration-500"></i>
-                        <span class="text-xs tracking-wider uppercase">發射失敗 (Launch Fail)</span>
-                        <span id="p1FailBadge" class="ml-1 text-[10px] font-mono bg-amber-950 border border-amber-600/60 text-amber-300 px-1.5 py-0.5 rounded-full">0/2</span>
-                    </button>
-                </div>
-
-                <!-- Score Action Buttons Grid P1 -->
-                <div class="grid grid-cols-2 gap-2.5">
-                    <button onclick="recordScore(1, 'SPIN', 1)" class="bg-slate-900/90 hover:bg-bx-cyan/20 border border-slate-800 hover:border-bx-cyan/60 text-slate-200 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-sm">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-bold text-bx-cyan uppercase tracking-wider">Spin Finish</span>
-                            <span class="text-xs font-black text-bx-cyan bg-bx-cyan/10 px-1.5 py-0.5 rounded border border-bx-cyan/30">+1</span>
-                        </div>
-                        <span class="text-[11px] text-slate-400 group-hover:text-slate-200 transition">轉速勝出</span>
-                    </button>
-
-                    <button onclick="recordScore(1, 'OVER', 2)" class="bg-slate-900/90 hover:bg-bx-cyan/20 border border-slate-800 hover:border-bx-cyan/60 text-slate-200 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-sm">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-bold text-bx-cyan uppercase tracking-wider">Over Finish</span>
-                            <span class="text-xs font-black text-bx-cyan bg-bx-cyan/10 px-1.5 py-0.5 rounded border border-bx-cyan/30">+2</span>
-                        </div>
-                        <span class="text-[11px] text-slate-400 group-hover:text-slate-200 transition">擊出場外</span>
-                    </button>
-
-                    <button onclick="recordScore(1, 'BURST', 2)" class="bg-slate-900/90 hover:bg-bx-cyan/20 border border-slate-800 hover:border-bx-cyan/60 text-slate-200 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-sm">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-bold text-bx-cyan uppercase tracking-wider">Burst Finish</span>
-                            <span class="text-xs font-black text-bx-cyan bg-bx-cyan/10 px-1.5 py-0.5 rounded border border-bx-cyan/30">+2</span>
-                        </div>
-                        <span class="text-[11px] text-slate-400 group-hover:text-slate-200 transition">爆裂擊散</span>
-                    </button>
-
-                    <button onclick="recordScore(1, 'XTREME', 3)" class="bg-gradient-to-br from-slate-900 via-slate-900 to-bx-cyan/20 hover:from-bx-cyan/30 hover:to-bx-cyan/10 border border-bx-cyan/40 hover:border-bx-cyan text-slate-100 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-md">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-black text-bx-cyan uppercase tracking-wider flex items-center gap-1">
-                                <i data-lucide="zap" class="w-3 h-3 fill-bx-cyan"></i> Xtreme
-                            </span>
-                            <span class="text-xs font-black text-slate-950 bg-bx-cyan px-1.5 py-0.5 rounded shadow">+3</span>
-                        </div>
-                        <span class="text-[11px] text-slate-300 group-hover:text-white transition">極限擊出場</span>
-                    </button>
-                </div>
-            </div>
-
-
-            <!-- ================= PLAYER 02 (RIGHT CARD / PINK THEME) ================= -->
-            <div class="bg-gradient-to-b from-slate-900/90 to-slate-950/90 border-2 border-slate-800 hover:border-bx-pink/50 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden transition-all duration-300 clip-angled-right">
-                <!-- Top Accent Stripe -->
-                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-bx-pink to-bx-gold"></div>
-
-                <!-- Player Header -->
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-2">
-                        <span class="px-2.5 py-1 bg-bx-pink/10 border border-bx-pink/30 text-bx-pink text-xs font-bold rounded uppercase tracking-wider">P2</span>
-                        <input type="text" id="p2Name" value="PLAYER 02" onchange="updatePlayerNames()" class="bg-transparent border-b border-transparent hover:border-slate-700 focus:border-bx-pink text-lg font-bold text-slate-100 outline-none w-32 sm:w-40 transition">
-                    </div>
-
-                    <!-- LAUNCH FAIL INDICATORS (PLAYER 2) -->
-                    <div class="flex flex-col items-end">
-                        <div class="flex items-center space-x-1 mb-1">
-                            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-tight">Launch Fail</span>
-                            <i data-lucide="alert-circle" class="w-3 h-3 text-bx-fail"></i>
-                        </div>
-                        <div class="flex items-center space-x-2 bg-slate-950/80 p-1.5 rounded-lg border border-slate-800/80">
-                            <!-- Indicator Light 1 -->
-                            <div id="p2FailLight1" class="w-4 h-4 rounded-full bg-slate-800 border border-slate-700 transition-all duration-300 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-transparent"></div>
-                            </div>
-                            <!-- Indicator Light 2 -->
-                            <div id="p2FailLight2" class="w-4 h-4 rounded-full bg-slate-800 border border-slate-700 transition-all duration-300 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-transparent"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Score Display P2 -->
-                <div class="flex items-center justify-between my-4 bg-slate-950/60 rounded-xl p-4 border border-slate-800/60 shadow-inner">
-                    <button onclick="adjustScore(2, -1)" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center justify-center transition active:scale-95">
-                        <i data-lucide="minus" class="w-5 h-5"></i>
-                    </button>
-                    <div class="text-center">
-                        <div id="p2Score" class="text-6xl sm:text-7xl font-black font-mono text-bx-pink neon-text-pink leading-none">0</div>
-                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-1 block">PTS</span>
-                    </div>
-                    <button onclick="adjustScore(2, 1)" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center justify-center transition active:scale-95">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
-                    </button>
-                </div>
-
-                <!-- LAUNCH FAIL TRIGGER BUTTON (P2) -->
-                <div class="mb-4">
-                    <button onclick="handleLaunchFail(2)" class="w-full bg-gradient-to-r from-amber-950/40 via-amber-900/30 to-amber-950/40 hover:from-amber-900/60 hover:to-amber-800/60 border border-amber-600/50 hover:border-amber-500 text-amber-200 font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center space-x-2 group shadow-md active:scale-98">
-                        <i data-lucide="disc-3" class="w-4 h-4 text-amber-400 group-hover:rotate-180 transition-transform duration-500"></i>
-                        <span class="text-xs tracking-wider uppercase">發射失敗 (Launch Fail)</span>
-                        <span id="p2FailBadge" class="ml-1 text-[10px] font-mono bg-amber-950 border border-amber-600/60 text-amber-300 px-1.5 py-0.5 rounded-full">0/2</span>
-                    </button>
-                </div>
-
-                <!-- Score Action Buttons Grid P2 -->
-                <div class="grid grid-cols-2 gap-2.5">
-                    <button onclick="recordScore(2, 'SPIN', 1)" class="bg-slate-900/90 hover:bg-bx-pink/20 border border-slate-800 hover:border-bx-pink/60 text-slate-200 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-sm">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-bold text-bx-pink uppercase tracking-wider">Spin Finish</span>
-                            <span class="text-xs font-black text-bx-pink bg-bx-pink/10 px-1.5 py-0.5 rounded border border-bx-pink/30">+1</span>
-                        </div>
-                        <span class="text-[11px] text-slate-400 group-hover:text-slate-200 transition">轉速勝出</span>
-                    </button>
-
-                    <button onclick="recordScore(2, 'OVER', 2)" class="bg-slate-900/90 hover:bg-bx-pink/20 border border-slate-800 hover:border-bx-pink/60 text-slate-200 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-sm">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-bold text-bx-pink uppercase tracking-wider">Over Finish</span>
-                            <span class="text-xs font-black text-bx-pink bg-bx-pink/10 px-1.5 py-0.5 rounded border border-bx-pink/30">+2</span>
-                        </div>
-                        <span class="text-[11px] text-slate-400 group-hover:text-slate-200 transition">擊出場外</span>
-                    </button>
-
-                    <button onclick="recordScore(2, 'BURST', 2)" class="bg-slate-900/90 hover:bg-bx-pink/20 border border-slate-800 hover:border-bx-pink/60 text-slate-200 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-sm">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-bold text-bx-pink uppercase tracking-wider">Burst Finish</span>
-                            <span class="text-xs font-black text-bx-pink bg-bx-pink/10 px-1.5 py-0.5 rounded border border-bx-pink/30">+2</span>
-                        </div>
-                        <span class="text-[11px] text-slate-400 group-hover:text-slate-200 transition">爆裂擊散</span>
-                    </button>
-
-                    <button onclick="recordScore(2, 'XTREME', 3)" class="bg-gradient-to-br from-slate-900 via-slate-900 to-bx-pink/20 hover:from-bx-pink/30 hover:to-bx-pink/10 border border-bx-pink/40 hover:border-bx-pink text-slate-100 p-3 rounded-xl flex flex-col items-start transition group active:scale-95 shadow-md">
-                        <div class="flex items-center justify-between w-full mb-1">
-                            <span class="text-[10px] font-black text-bx-pink uppercase tracking-wider flex items-center gap-1">
-                                <i data-lucide="zap" class="w-3 h-3 fill-bx-pink"></i> Xtreme
-                            </span>
-                            <span class="text-xs font-black text-slate-950 bg-bx-pink px-1.5 py-0.5 rounded shadow">+3</span>
-                        </div>
-                        <span class="text-[11px] text-slate-300 group-hover:text-white transition">極限擊出場</span>
-                    </button>
-                </div>
-            </div>
-
+        <!-- DYNAMIC PLAYER GRID CONTAINER -->
+        <div id="playerGridContainer" class="grid gap-4 sm:gap-6 transition-all duration-300">
+            <!-- Dynamic Player Cards rendered via JS -->
         </div>
 
-        <!-- CENTER ACTION CONTROLS PANEL -->
-        <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-            <!-- Countdown Ready Button -->
-            <button onclick="startCountdown()" class="flex-1 min-w-[200px] max-w-sm bg-gradient-to-r from-bx-green via-emerald-400 to-bx-cyan text-slate-950 font-black text-base py-3.5 px-6 rounded-xl shadow-[0_0_20px_rgba(0,255,102,0.4)] hover:shadow-[0_0_30px_rgba(0,255,102,0.6)] transition-all duration-300 transform active:scale-98 flex items-center justify-center space-x-2 tracking-wider uppercase clip-angled-sm">
+        <div class="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3">
+            <!-- Launch Countdown Trigger -->
+            <button onclick="startCountdown()" class="flex-1 min-w-[220px] max-w-md bg-gradient-to-r from-bx-green via-emerald-400 to-bx-cyan text-slate-950 font-black font-orbitron text-sm sm:text-base py-3.5 px-6 rounded-xl shadow-[0_0_20px_rgba(0,255,102,0.4)] hover:shadow-[0_0_30px_rgba(0,255,102,0.6)] transition-all duration-300 active:scale-98 flex items-center justify-center space-x-2 tracking-wider uppercase clip-angled-sm">
                 <i data-lucide="play" class="w-5 h-5 fill-slate-950"></i>
                 <span>TAP TO READY (發射倒數)</span>
             </button>
 
-            <!-- Draw Button -->
-            <button onclick="recordDraw()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-semibold px-4 py-3.5 rounded-xl transition active:scale-95 flex items-center space-x-2">
+            <!-- Draw Round Button -->
+            <button onclick="recordDraw()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-xs sm:text-sm font-semibold px-4 py-3.5 rounded-xl transition active:scale-95 flex items-center space-x-2">
                 <i data-lucide="scale" class="w-4 h-4 text-amber-400"></i>
-                <span>平手 (Draw)</span>
+                <span>平手 / 重賽 (Draw)</span>
             </button>
 
-            <!-- Undo Last Action -->
-            <button onclick="undoLastAction()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-semibold px-4 py-3.5 rounded-xl transition active:scale-95 flex items-center space-x-2">
+            <!-- Undo Button -->
+            <button onclick="undoLastAction()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-xs sm:text-sm font-semibold px-4 py-3.5 rounded-xl transition active:scale-95 flex items-center space-x-2">
                 <i data-lucide="undo-2" class="w-4 h-4 text-bx-cyan"></i>
                 <span>復原 (Undo)</span>
             </button>
         </div>
 
-        <!-- MATCH HISTORY LOG PANEL -->
-        <section class="mt-8 bg-slate-900/60 border border-slate-800 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
+        <section class="mt-8 bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
             <div class="flex items-center justify-between mb-3 px-1">
                 <div class="flex items-center space-x-2">
                     <i data-lucide="history" class="w-4 h-4 text-bx-green"></i>
-                    <h3 class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">對戰紀錄 (Match History)</h3>
+                    <h3 class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">對戰紀錄 (Match Log)</h3>
                 </div>
                 <span id="historyCount" class="text-[10px] font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">0 LOGS</span>
             </div>
 
-            <div class="max-h-40 overflow-y-auto pr-1 space-y-1.5 font-mono text-xs" id="historyLogList">
-                <div class="text-center py-6 text-slate-600 italic">尚未有對戰紀錄... 點擊分數按鈕開始紀錄</div>
+            <div class="max-h-36 overflow-y-auto pr-1 space-y-1.5 font-mono text-xs" id="historyLogList">
+                <div class="text-center py-6 text-slate-600 italic">尚無歷史紀錄... 點擊計分按鈕開始紀錄對戰</div>
             </div>
         </section>
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="w-full text-center py-4 text-slate-600 text-[11px] font-mono border-t border-slate-900">
-        BEYBLADE X DUAL DIGITAL REFEREE SCOREBOARD &copy; 2026
-    </footer>
-
-    <!-- OVERLAY 1: FULL SCREEN COUNTDOWN OVERLAY -->
     <div id="countdownOverlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center hidden select-none">
         <div class="text-center px-4">
-            <div class="text-sm font-mono text-bx-green tracking-widest uppercase mb-2">BEYBLADE X LAUNCH READY</div>
-            <div id="countdownText" class="text-8xl sm:text-9xl font-black font-mono text-slate-100 tracking-tighter drop-shadow-[0_0_35px_rgba(0,255,102,0.8)]">
+            <div class="text-xs sm:text-sm font-mono text-bx-green tracking-widest uppercase mb-3">BEYBLADE X LAUNCH READY</div>
+            <div id="countdownText" class="text-8xl sm:text-9xl font-black font-orbitron text-slate-100 tracking-tighter drop-shadow-[0_0_35px_rgba(0,255,102,0.8)]">
                 3
             </div>
-            <p id="countdownSubtext" class="text-sm font-bold text-slate-400 mt-6 tracking-widest uppercase">GET READY...</p>
+            <p id="countdownSubtext" class="text-sm font-bold text-slate-400 mt-6 tracking-widest uppercase font-mono">3... 2... 1... GO SHOOT!</p>
         </div>
         <button onclick="cancelCountdown()" class="absolute bottom-10 bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-700 px-6 py-2 rounded-full text-xs font-mono transition">
             CANCEL (取消)
         </button>
     </div>
 
-    <!-- OVERLAY 2: VICTORY WINNER MODAL -->
     <div id="victoryModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border-2 border-bx-green rounded-2xl max-w-md w-full p-6 text-center shadow-[0_0_50px_rgba(0,255,102,0.3)] relative clip-angled-lg animate-pop">
-            <!-- Trophy Icon -->
             <div class="w-20 h-20 mx-auto mb-4 bg-bx-green/20 rounded-full border border-bx-green/40 flex items-center justify-center shadow-[0_0_20px_rgba(0,255,102,0.5)]">
                 <i data-lucide="trophy" class="w-10 h-10 text-bx-green"></i>
             </div>
 
-            <h2 class="text-sm font-mono text-slate-400 uppercase tracking-widest">MATCH VICTORY!</h2>
-            <h1 id="winnerNameDisplay" class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-bx-green via-bx-cyan to-white my-2">PLAYER 01</h1>
-            <p class="text-xs text-slate-300 font-mono mb-6">率先達到獲勝目標分數！</p>
+            <h2 class="text-xs font-orbitron text-slate-400 uppercase tracking-widest">MATCH VICTORY</h2>
+            <h1 id="winnerNameDisplay" class="text-3xl font-black font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-bx-green via-bx-cyan to-white my-2">PLAYER 01</h1>
+            <p class="text-xs text-slate-300 font-mono mb-6">率先達成目標勝分！</p>
 
-            <!-- Final Score Board -->
-            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex items-center justify-around mb-6">
-                <div>
-                    <div id="modalP1Name" class="text-xs text-bx-cyan font-bold">P1</div>
-                    <div id="modalP1Score" class="text-3xl font-black font-mono text-slate-100">4</div>
-                </div>
-                <div class="text-xl font-black text-slate-700">:</div>
-                <div>
-                    <div id="modalP2Name" class="text-xs text-bx-pink font-bold">P2</div>
-                    <div id="modalP2Score" class="text-3xl font-black font-mono text-slate-100">2</div>
-                </div>
+            <div id="modalScoreBoard" class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex items-center justify-around mb-6">
+                <!-- Dynamically populated score overview -->
             </div>
 
             <div class="flex space-x-3">
-                <button onclick="confirmResetAll()" class="flex-1 bg-bx-green hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl transition shadow-[0_0_15px_rgba(0,255,102,0.4)]">
+                <button onclick="confirmResetAll()" class="flex-1 bg-bx-green hover:bg-emerald-400 text-slate-950 font-black font-orbitron py-3 rounded-xl transition shadow-[0_0_15px_rgba(0,255,102,0.4)]">
                     再戰一局 (REMATCH)
                 </button>
                 <button onclick="closeVictoryModal()" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold">
@@ -490,28 +276,30 @@
         </div>
     </div>
 
-
     <script>
-        // ================= STATE MANAGEMENT =================
+        // State Configuration
         const state = {
-            p1Score: 0,
-            p2Score: 0,
-            p1Fails: 0,
-            p2Fails: 0,
+            playerCount: 2,
             targetScore: 4,
             currentRound: 1,
-            history: [],
-            isMuted: false,
             timerSeconds: 0,
-            timerInterval: null,
             isTimerRunning: false,
-            isMatchEnded: false
+            timerInterval: null,
+            isMuted: false,
+            isMatchEnded: false,
+            players: [
+                { id: 1, name: 'PLAYER 01', score: 0, fails: 0, color: '#00FF66', theme: 'p1' },
+                { id: 2, name: 'PLAYER 02', score: 0, fails: 0, color: '#00E5FF', theme: 'p2' },
+                { id: 3, name: 'PLAYER 03', score: 0, fails: 0, color: '#FF0077', theme: 'p3' },
+                { id: 4, name: 'PLAYER 04', score: 0, fails: 0, color: '#FFC700', theme: 'p4' }
+            ],
+            history: []
         };
 
-        // Web Audio Context Synthesizer
+        // Web Audio Synthesizer
         let audioCtx = null;
 
-        function initAudioContext() {
+        function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
@@ -520,11 +308,10 @@
             }
         }
 
-        // ================= SYNTH AUDIO SOUND SYSTEM =================
         function playTone(freq, type, duration, gainVal = 0.1) {
             if (state.isMuted) return;
             try {
-                initAudioContext();
+                initAudio();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = type;
@@ -536,58 +323,54 @@
                 osc.start();
                 osc.stop(audioCtx.currentTime + duration);
             } catch (e) {
-                console.warn('Audio play failed:', e);
+                console.warn('Audio error:', e);
             }
         }
 
-        // Sound Effects
-        function soundBeepLow() { playTone(440, 'sine', 0.15, 0.1); }
-        function soundBeepHigh() { playTone(880, 'triangle', 0.3, 0.15); }
+        function soundClick() { playTone(440, 'sine', 0.08, 0.08); }
+        function soundPoint1() { playTone(523.25, 'sine', 0.12, 0.15); }
+        function soundPoint2() { 
+            playTone(523.25, 'sine', 0.1, 0.15); 
+            setTimeout(() => playTone(659.25, 'sine', 0.15, 0.15), 90); 
+        }
+        function soundPoint3() { 
+            playTone(523.25, 'triangle', 0.08, 0.15); 
+            setTimeout(() => playTone(659.25, 'triangle', 0.08, 0.15), 80); 
+            setTimeout(() => playTone(783.99, 'triangle', 0.25, 0.2), 160); 
+        }
+        function soundFail() { 
+            playTone(220, 'sawtooth', 0.12, 0.2); 
+            setTimeout(() => playTone(164.81, 'sawtooth', 0.25, 0.2), 100); 
+        }
+        function soundPenalty() { 
+            playTone(300, 'square', 0.12, 0.2); 
+            setTimeout(() => playTone(200, 'square', 0.12, 0.2), 120); 
+            setTimeout(() => playTone(600, 'sine', 0.3, 0.25), 240); 
+        }
         function soundGoShoot() { 
-            playTone(587.33, 'sawtooth', 0.1, 0.2);
-            setTimeout(() => playTone(880, 'sawtooth', 0.4, 0.25), 100);
+            playTone(587.33, 'sawtooth', 0.1, 0.2); 
+            setTimeout(() => playTone(880, 'sawtooth', 0.35, 0.25), 100); 
         }
-        function soundScoreGain() {
-            playTone(523.25, 'sine', 0.1, 0.15);
-            setTimeout(() => playTone(659.25, 'sine', 0.1, 0.15), 100);
-            setTimeout(() => playTone(783.99, 'sine', 0.25, 0.2), 200);
-        }
-        function soundLaunchFail() {
-            playTone(220, 'sawtooth', 0.15, 0.2);
-            setTimeout(() => playTone(164.81, 'sawtooth', 0.35, 0.25), 150);
-        }
-        function soundPenaltyAlert() {
-            playTone(300, 'square', 0.15, 0.2);
-            setTimeout(() => playTone(200, 'square', 0.15, 0.2), 150);
-            setTimeout(() => playTone(500, 'sine', 0.3, 0.25), 300);
-        }
-        function soundVictory() {
-            const notes = [523.25, 659.25, 783.99, 1046.50];
-            notes.forEach((freq, idx) => {
-                setTimeout(() => playTone(freq, 'triangle', 0.3, 0.2), idx * 120);
-            });
+        function soundVictory() { 
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => setTimeout(() => playTone(f, 'triangle', 0.25, 0.2), i * 110)); 
         }
 
         function toggleMute() {
             state.isMuted = !state.isMuted;
             const icon = document.getElementById('audioIcon');
-            if (state.isMuted) {
-                icon.setAttribute('data-lucide', 'volume-x');
-            } else {
-                icon.setAttribute('data-lucide', 'volume-2');
-                soundBeepHigh();
-            }
+            icon.setAttribute('data-lucide', state.isMuted ? 'volume-x' : 'volume-2');
+            if (!state.isMuted) soundClick();
             lucide.createIcons();
         }
 
-        // ================= TIMER LOGIC =================
         function updateTimerDisplay() {
-            const mins = Math.floor(state.timerSeconds / 60).toString().padStart(2, '0');
-            const secs = (state.timerSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').innerText = `${mins}:${secs}`;
+            const m = Math.floor(state.timerSeconds / 60).toString().padStart(2, '0');
+            const s = (state.timerSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
         }
 
         function toggleTimer() {
+            initAudio();
             if (state.isTimerRunning) {
                 clearInterval(state.timerInterval);
                 state.isTimerRunning = false;
@@ -612,121 +395,228 @@
             lucide.createIcons();
         }
 
-        // ================= LAUNCH FAIL & SCORING RULE LOGIC =================
+        function changeTargetScore(val) {
+            state.targetScore = parseInt(val, 10);
+            checkWinner();
+        }
+
+        function setPlayerCount(count) {
+            initAudio();
+            soundClick();
+            state.playerCount = count;
+
+            // Highlight mode tabs
+            [2, 3, 4].forEach(n => {
+                const btn = document.getElementById(`mode${n}PBtn`);
+                if (n === count) {
+                    btn.className = "px-2.5 py-1 text-xs font-bold font-mono rounded-md bg-bx-green text-slate-950 shadow";
+                } else {
+                    btn.className = "px-2.5 py-1 text-xs font-bold font-mono rounded-md text-slate-400 hover:text-white";
+                }
+            });
+
+            renderPlayerGrid();
+            updateUI();
+        }
+
+        function renderPlayerGrid() {
+            const container = document.getElementById('playerGridContainer');
+            
+            // Set responsive grid layout according to count
+            if (state.playerCount === 2) {
+                container.className = "grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6";
+            } else if (state.playerCount === 3) {
+                container.className = "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5";
+            } else {
+                container.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4";
+            }
+
+            container.innerHTML = '';
+
+            for (let i = 0; i < state.playerCount; i++) {
+                const player = state.players[i];
+                
+                const themeBorder = player.id === 1 ? 'hover:border-bx-green/60' :
+                                    player.id === 2 ? 'hover:border-bx-cyan/60' :
+                                    player.id === 3 ? 'hover:border-bx-pink/60' : 'hover:border-bx-gold/60';
+
+                const themeColorText = player.id === 1 ? 'text-bx-green text-glow-green' :
+                                       player.id === 2 ? 'text-bx-cyan text-glow-cyan' :
+                                       player.id === 3 ? 'text-bx-pink text-glow-pink' : 'text-bx-gold text-glow-gold';
+
+                const themeBadge = player.id === 1 ? 'bg-bx-green/10 text-bx-green border-bx-green/30' :
+                                   player.id === 2 ? 'bg-bx-cyan/10 text-bx-cyan border-bx-cyan/30' :
+                                   player.id === 3 ? 'bg-bx-pink/10 text-bx-pink border-bx-pink/30' : 'bg-bx-gold/10 text-bx-gold border-bx-gold/30';
+
+                const cardHTML = `
+                    <div class="bg-gradient-to-b from-slate-900/90 to-slate-950/90 border-2 border-slate-800 ${themeBorder} rounded-2xl p-4 shadow-2xl relative overflow-hidden transition-all duration-300 neon-${player.theme} clip-angled-sm">
+                        
+                        <!-- Top Accent Line -->
+                        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r" style="background-image: linear-gradient(to right, ${player.color}, transparent)"></div>
+
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-0.5 border ${themeBadge} text-xs font-bold font-mono rounded uppercase">P${player.id}</span>
+                                <input type="text" value="${player.name}" onchange="state.players[${i}].name = this.value" class="bg-transparent border-b border-transparent hover:border-slate-700 focus:border-slate-500 text-base font-bold text-slate-100 outline-none w-28 sm:w-32 transition">
+                            </div>
+
+                            <!-- Launch Fail Indicator Lights -->
+                            <div class="flex flex-col items-end">
+                                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-tight">Fail Status</span>
+                                <div class="flex items-center space-x-1.5 bg-slate-950/80 p-1.5 rounded-lg border border-slate-800/80 mt-0.5">
+                                    <div id="p${player.id}FailL1" class="w-3.5 h-3.5 rounded-full bg-slate-800 border border-slate-700 transition duration-300"></div>
+                                    <div id="p${player.id}FailL2" class="w-3.5 h-3.5 rounded-full bg-slate-800 border border-slate-700 transition duration-300"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Score Display -->
+                        <div class="flex items-center justify-between my-3 bg-slate-950/60 rounded-xl p-3 border border-slate-800/60 shadow-inner">
+                            <button onclick="adjustScore(${player.id}, -1)" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center justify-center transition active:scale-95">
+                                <i data-lucide="minus" class="w-4 h-4"></i>
+                            </button>
+                            <div class="text-center">
+                                <div id="p${player.id}Score" class="text-5xl font-black font-orbitron ${themeColorText} leading-none">0</div>
+                                <span class="text-[9px] text-slate-500 uppercase tracking-widest font-mono mt-0.5 block">PTS</span>
+                            </div>
+                            <button onclick="adjustScore(${player.id}, 1)" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center justify-center transition active:scale-95">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <!-- LAUNCH FAIL FAULT TRIGGER BUTTON -->
+                        <div class="mb-3">
+                            <button onclick="handleLaunchFail(${player.id})" class="w-full bg-gradient-to-r from-amber-950/40 via-amber-900/30 to-amber-950/40 hover:from-amber-900/60 hover:to-amber-800/60 border border-amber-600/50 text-amber-200 font-bold py-2 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 group active:scale-98 shadow">
+                                <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-amber-400 group-hover:rotate-180 transition-transform duration-500"></i>
+                                <span class="text-xs tracking-wider uppercase font-mono">發射失敗</span>
+                                <span id="p${player.id}FailBadge" class="ml-1 text-[10px] font-mono bg-amber-950 border border-amber-600/60 text-amber-300 px-1.5 py-0.2 rounded-full">0/2</span>
+                            </button>
+                        </div>
+
+                        <!-- Score Action Buttons -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="recordScore(${player.id}, 'SPIN', 1)" class="bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-slate-600 p-2.5 rounded-xl flex flex-col items-start transition group active:scale-95">
+                                <div class="flex items-center justify-between w-full mb-0.5">
+                                    <span class="text-[9px] font-bold text-slate-300 uppercase tracking-wider">Spin</span>
+                                    <span class="text-[10px] font-black text-slate-950 bg-slate-200 px-1 rounded">+1</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400">轉速勝出</span>
+                            </button>
+
+                            <button onclick="recordScore(${player.id}, 'OVER', 2)" class="bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-slate-600 p-2.5 rounded-xl flex flex-col items-start transition group active:scale-95">
+                                <div class="flex items-center justify-between w-full mb-0.5">
+                                    <span class="text-[9px] font-bold text-slate-300 uppercase tracking-wider">Over</span>
+                                    <span class="text-[10px] font-black text-slate-950 bg-slate-200 px-1 rounded">+2</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400">擊出場外</span>
+                            </button>
+
+                            <button onclick="recordScore(${player.id}, 'BURST', 2)" class="bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-slate-600 p-2.5 rounded-xl flex flex-col items-start transition group active:scale-95">
+                                <div class="flex items-center justify-between w-full mb-0.5">
+                                    <span class="text-[9px] font-bold text-slate-300 uppercase tracking-wider">Burst</span>
+                                    <span class="text-[10px] font-black text-slate-950 bg-slate-200 px-1 rounded">+2</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400">爆裂擊散</span>
+                            </button>
+
+                            <button onclick="recordScore(${player.id}, 'XTREME', 3)" class="bg-gradient-to-br from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 border border-slate-700 p-2.5 rounded-xl flex flex-col items-start transition group active:scale-95">
+                                <div class="flex items-center justify-between w-full mb-0.5">
+                                    <span class="text-[9px] font-black text-bx-green uppercase tracking-wider flex items-center gap-0.5">
+                                        <i data-lucide="zap" class="w-2.5 h-2.5 fill-bx-green"></i> Xtreme
+                                    </span>
+                                    <span class="text-[10px] font-black text-slate-950 bg-bx-green px-1 rounded shadow">+3</span>
+                                </div>
+                                <span class="text-[10px] text-slate-300">極限擊出場</span>
+                            </button>
+                        </div>
+
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            }
+            
+            lucide.createIcons();
+        }
 
         /**
-         * Handle Launch Fail rule logic:
-         * 1. Record player launch failure count (show 2 indicator lights)
-         * 2. When player reaches 2 launch fails:
-         *    - Automatically give OPPONENT +1 point (Spin Finish value).
-         *    - Trigger banner notification.
-         *    - Play score/penalty sound.
-         *    - Reset player's launch fail lights to 0.
-         *    - Check if opponent reached target score.
+         * Beyblade X Multi-Player Launch Failure Enforcement Rule:
+         * When a player reaches 2 Launch Failures:
+         * - That player's failure counter resets to 0.
+         * - ALL OTHER ACTIVE OPPONENTS automatically get +1 point (Spin Finish value)!
          */
-        function handleLaunchFail(player) {
-            initAudioContext();
+        function handleLaunchFail(playerId) {
+            initAudio();
             if (state.isMatchEnded) return;
 
-            const p1Name = document.getElementById('p1Name').value || 'PLAYER 01';
-            const p2Name = document.getElementById('p2Name').value || 'PLAYER 02';
+            const targetPlayer = state.players.find(p => p.id === playerId);
+            targetPlayer.fails++;
 
-            if (player === 1) {
-                state.p1Fails++;
-                soundLaunchFail();
-
-                if (state.p1Fails < 2) {
-                    // First Fail
-                    addHistoryLog(`[R${state.currentRound}] ${p1Name} 發射失敗 1 次 (1/2)`);
-                    showToast(`發射失敗`, `${p1Name} 記錄 1 次發射失敗。累積 2 次將直接給對手加 1 分！`);
-                } else {
-                    // Second Fail reached -> Penalty triggered!
-                    state.p1Fails = 0; // Reset fail count
-                    state.p2Score += 1; // Give opponent +1 point
-                    
-                    soundPenaltyAlert();
-                    addHistoryLog(`[R${state.currentRound}] ⚠️ ${p1Name} 累積 2 次發射失敗！${p2Name} 獲得 +1 分`);
-                    showToast(`發射失敗懲罰觸發！`, `${p1Name} 累積 2 次發射失敗！${p2Name} 自動獲得 1 分！`, true);
-                    
-                    state.currentRound++;
-                    checkWinner();
-                }
+            if (targetPlayer.fails < 2) {
+                soundFail();
+                addHistoryLog(`[R${state.currentRound}] ${targetPlayer.name} 發射失敗 1 次 (1/2)`);
+                showToast(`發射失敗`, `${targetPlayer.name} 記錄 1 次發射失敗。累積 2 次將直接給對手全體加 1 分！`);
             } else {
-                state.p2Fails++;
-                soundLaunchFail();
+                // Trigger penalty: Reset fails, give ALL OTHER OPPONENTS +1
+                targetPlayer.fails = 0;
+                soundPenalty();
 
-                if (state.p2Fails < 2) {
-                    // First Fail
-                    addHistoryLog(`[R${state.currentRound}] ${p2Name} 發射失敗 1 次 (1/2)`);
-                    showToast(`發射失敗`, `${p2Name} 記錄 1 次發射失敗。累積 2 次將直接給對手加 1 分！`);
-                } else {
-                    // Second Fail reached -> Penalty triggered!
-                    state.p2Fails = 0; // Reset fail count
-                    state.p1Score += 1; // Give opponent +1 point
-                    
-                    soundPenaltyAlert();
-                    addHistoryLog(`[R${state.currentRound}] ⚠️ ${p2Name} 累積 2 次發射失敗！${p1Name} 獲得 +1 分`);
-                    showToast(`發射失敗懲罰觸發！`, `${p2Name} 累積 2 次發射失敗！${p1Name} 自動獲得 1 分！`, true);
+                const opponents = state.players.filter(p => p.id !== playerId && p.id <= state.playerCount);
+                opponents.forEach(op => op.score += 1);
 
-                    state.currentRound++;
-                    checkWinner();
-                }
+                const opponentNames = opponents.map(op => op.name).join('、');
+                addHistoryLog(`[R${state.currentRound}] ⚠️ ${targetPlayer.name} 累積 2 次發射失敗！其餘對手 (${opponentNames}) 各獲得 +1 分`);
+                showToast(`發射失敗懲罰！`, `${targetPlayer.name} 累積 2 次發射失敗！其餘選手 (${opponentNames}) 自動獲得 +1 分！`, true);
+
+                state.currentRound++;
+                checkWinner();
             }
 
             updateUI();
         }
 
-        function recordScore(player, type, points) {
-            initAudioContext();
+        function recordScore(playerId, type, points) {
+            initAudio();
             if (state.isMatchEnded) return;
 
-            const p1Name = document.getElementById('p1Name').value || 'PLAYER 01';
-            const p2Name = document.getElementById('p2Name').value || 'PLAYER 02';
-            const playerName = player === 1 ? p1Name : p2Name;
+            const player = state.players.find(p => p.id === playerId);
+            player.score += points;
 
-            if (player === 1) {
-                state.p1Score += points;
-            } else {
-                state.p2Score += points;
-            }
+            if (points === 1) soundPoint1();
+            else if (points === 2) soundPoint2();
+            else soundPoint3();
 
-            soundScoreGain();
-            addHistoryLog(`[R${state.currentRound}] ${playerName} ${type} FINISH (+${points}分)`);
+            addHistoryLog(`[R${state.currentRound}] ${player.name} ${type} FINISH (+${points}分)`);
             state.currentRound++;
 
             updateUI();
             checkWinner();
         }
 
-        function adjustScore(player, amount) {
-            initAudioContext();
-            if (player === 1) {
-                state.p1Score = Math.max(0, state.p1Score + amount);
-            } else {
-                state.p2Score = Math.max(0, state.p2Score + amount);
-            }
-            soundBeepLow();
+        function adjustScore(playerId, amount) {
+            initAudio();
+            const player = state.players.find(p => p.id === playerId);
+            player.score = Math.max(0, player.score + amount);
+            soundClick();
             updateUI();
             checkWinner();
         }
 
         function recordDraw() {
-            initAudioContext();
+            initAudio();
             if (state.isMatchEnded) return;
-            soundBeepLow();
-            addHistoryLog(`[R${state.currentRound}] 本回合平手 (Draw)`);
+            soundClick();
+            addHistoryLog(`[R${state.currentRound}] 本回合平手 / 重賽 (Draw)`);
             state.currentRound++;
             updateUI();
         }
 
         function undoLastAction() {
             if (state.history.length === 0) return;
-            initAudioContext();
-            soundBeepLow();
+            initAudio();
+            soundClick();
 
-            // Simple reset state re-simulation from history stack
             state.history.pop();
-            // Recalculate round
             state.currentRound = Math.max(1, state.currentRound - 1);
             showToast(`復原`, `已移除上一筆紀錄。`);
             renderHistoryLog();
@@ -734,20 +624,24 @@
         }
 
         function checkWinner() {
-            const p1Name = document.getElementById('p1Name').value || 'PLAYER 01';
-            const p2Name = document.getElementById('p2Name').value || 'PLAYER 02';
+            const activePlayers = state.players.slice(0, state.playerCount);
+            const winner = activePlayers.find(p => p.score >= state.targetScore);
 
-            if (state.p1Score >= state.targetScore || state.p2Score >= state.targetScore) {
+            if (winner) {
                 state.isMatchEnded = true;
-                const winnerName = state.p1Score >= state.targetScore ? p1Name : p2Name;
-
-                document.getElementById('winnerNameDisplay').innerText = winnerName;
-                document.getElementById('modalP1Name').innerText = p1Name;
-                document.getElementById('modalP1Score').innerText = state.p1Score;
-                document.getElementById('modalP2Name').innerText = p2Name;
-                document.getElementById('modalP2Score').innerText = state.p2Score;
-
                 soundVictory();
+
+                document.getElementById('winnerNameDisplay').innerText = winner.name;
+
+                // Render match result overview
+                const modalBoard = document.getElementById('modalScoreBoard');
+                modalBoard.innerHTML = activePlayers.map(p => `
+                    <div class="text-center px-2">
+                        <div class="text-xs font-bold font-mono" style="color:${p.color}">${p.name}</div>
+                        <div class="text-2xl font-black font-orbitron text-slate-100">${p.score}</div>
+                    </div>
+                `).join('<div class="text-slate-700 font-black">:</div>');
+
                 document.getElementById('victoryModal').classList.remove('hidden');
             }
         }
@@ -756,58 +650,32 @@
             document.getElementById('victoryModal').classList.add('hidden');
         }
 
-        function changeTargetScore(val) {
-            state.targetScore = parseInt(val, 10);
-            checkWinner();
-        }
-
-        function updatePlayerNames() {
-            // Updated dynamically via input getters
-        }
-
-        // ================= UI UPDATER =================
         function updateUI() {
-            // Update Score Displays
-            document.getElementById('p1Score').innerText = state.p1Score;
-            document.getElementById('p2Score').innerText = state.p2Score;
-            document.getElementById('currentRoundText').innerText = `ROUND ${state.currentRound}`;
+            document.getElementById('currentRoundText').innerText = `R${state.currentRound}`;
 
-            // Update P1 Fail Lights & Badge
-            const p1L1 = document.getElementById('p1FailLight1');
-            const p1L2 = document.getElementById('p1FailLight2');
-            document.getElementById('p1FailBadge').innerText = `${state.p1Fails}/2`;
+            for (let i = 0; i < state.playerCount; i++) {
+                const p = state.players[i];
+                const scoreElem = document.getElementById(`p${p.id}Score`);
+                const badgeElem = document.getElementById(`p${p.id}FailBadge`);
+                const l1 = document.getElementById(`p${p.id}FailL1`);
+                const l2 = document.getElementById(`p${p.id}FailL2`);
 
-            if (state.p1Fails >= 1) {
-                p1L1.className = "w-4 h-4 rounded-full bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)] animate-pulse-fast flex items-center justify-center";
-            } else {
-                p1L1.className = "w-4 h-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center";
-            }
+                if (scoreElem) scoreElem.innerText = p.score;
+                if (badgeElem) badgeElem.innerText = `${p.fails}/2`;
 
-            if (state.p1Fails >= 2) {
-                p1L2.className = "w-4 h-4 rounded-full bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)] animate-pulse-fast flex items-center justify-center";
-            } else {
-                p1L2.className = "w-4 h-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center";
-            }
-
-            // Update P2 Fail Lights & Badge
-            const p2L1 = document.getElementById('p2FailLight1');
-            const p2L2 = document.getElementById('p2FailLight2');
-            document.getElementById('p2FailBadge').innerText = `${state.p2Fails}/2`;
-
-            if (state.p2Fails >= 1) {
-                p2L1.className = "w-4 h-4 rounded-full bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)] animate-pulse-fast flex items-center justify-center";
-            } else {
-                p2L1.className = "w-4 h-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center";
-            }
-
-            if (state.p2Fails >= 2) {
-                p2L2.className = "w-4 h-4 rounded-full bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)] animate-pulse-fast flex items-center justify-center";
-            } else {
-                p2L2.className = "w-4 h-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center";
+                if (l1) {
+                    l1.className = p.fails >= 1 
+                        ? "w-3.5 h-3.5 rounded-full bg-amber-500 border border-amber-300 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-pulse-fast" 
+                        : "w-3.5 h-3.5 rounded-full bg-slate-800 border border-slate-700";
+                }
+                if (l2) {
+                    l2.className = p.fails >= 2 
+                        ? "w-3.5 h-3.5 rounded-full bg-amber-500 border border-amber-300 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-pulse-fast" 
+                        : "w-3.5 h-3.5 rounded-full bg-slate-800 border border-slate-700";
+                }
             }
         }
 
-        // ================= HISTORY LOG SYSTEM =================
         function addHistoryLog(msg) {
             state.history.unshift({
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
@@ -821,94 +689,91 @@
             document.getElementById('historyCount').innerText = `${state.history.length} LOGS`;
 
             if (state.history.length === 0) {
-                container.innerHTML = `<div class="text-center py-6 text-slate-600 italic">尚未有對戰紀錄... 點擊分數按鈕開始紀錄</div>`;
+                container.innerHTML = `<div class="text-center py-6 text-slate-600 italic">尚無歷史紀錄... 點擊計分按鈕開始紀錄對戰</div>`;
                 return;
             }
 
             container.innerHTML = state.history.map(item => `
-                <div class="flex items-center justify-between py-1.5 px-3 bg-slate-950/70 rounded border border-slate-800/80 hover:border-slate-700 transition">
+                <div class="flex items-center justify-between py-1.5 px-3 bg-slate-950/70 rounded border border-slate-800 hover:border-slate-700 transition">
                     <span class="text-slate-300">${item.msg}</span>
-                    <span class="text-[10px] text-slate-500 ml-2 font-mono">${item.time}</span>
+                    <span class="text-[10px] text-slate-500 font-mono ml-2">${item.time}</span>
                 </div>
             `).join('');
         }
 
-        // ================= TOAST SYSTEM =================
-        let toastTimeout = null;
+        let toastTimer = null;
         function showToast(title, message, isWarning = false) {
             const toast = document.getElementById('toastNotification');
+            const iconContainer = document.getElementById('toastIconContainer');
             document.getElementById('toastTitle').innerText = title;
             document.getElementById('toastMessage').innerText = message;
 
             if (isWarning) {
-                toast.className = "fixed top-20 left-1/2 -translate-x-1/2 z-50 max-w-md w-11/12 bg-amber-950/95 border-2 border-amber-500 text-slate-100 p-4 rounded-xl shadow-[0_10px_30px_rgba(245,158,11,0.5)] animate-toast backdrop-blur-md";
+                toast.className = "fixed top-16 left-1/2 -translate-x-1/2 z-50 max-w-md w-11/12 bg-amber-950/95 border-2 border-amber-500 text-slate-100 p-3.5 rounded-xl shadow-[0_10px_30px_rgba(245,158,11,0.5)] animate-toast backdrop-blur-md";
+                iconContainer.className = "p-2 bg-amber-500/20 text-amber-400 rounded-lg border border-amber-500/40 flex-shrink-0";
             } else {
-                toast.className = "fixed top-20 left-1/2 -translate-x-1/2 z-50 max-w-md w-11/12 bg-slate-900/95 border-2 border-bx-cyan text-slate-100 p-4 rounded-xl shadow-[0_10px_30px_rgba(0,229,255,0.3)] animate-toast backdrop-blur-md";
+                toast.className = "fixed top-16 left-1/2 -translate-x-1/2 z-50 max-w-md w-11/12 bg-slate-900/95 border-2 border-bx-cyan text-slate-100 p-3.5 rounded-xl shadow-[0_10px_30px_rgba(0,229,255,0.3)] animate-toast backdrop-blur-md";
+                iconContainer.className = "p-2 bg-bx-cyan/20 text-bx-cyan rounded-lg border border-bx-cyan/40 flex-shrink-0";
             }
 
             toast.classList.remove('hidden');
 
-            if (toastTimeout) clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                closeToast();
-            }, 4500);
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => closeToast(), 4500);
         }
 
         function closeToast() {
             document.getElementById('toastNotification').classList.add('hidden');
         }
 
-        // ================= COUNTDOWN SYSTEM (3, 2, 1... GO SHOOT!) =================
-        let countdownTimer = null;
+        let countdownInterval = null;
         function startCountdown() {
-            initAudioContext();
+            initAudio();
             const overlay = document.getElementById('countdownOverlay');
             const text = document.getElementById('countdownText');
             const subtext = document.getElementById('countdownSubtext');
 
             overlay.classList.remove('hidden');
-            
             let count = 3;
+
             text.innerText = count;
-            text.className = "text-8xl sm:text-9xl font-black font-mono text-bx-green animate-pop drop-shadow-[0_0_35px_rgba(0,255,102,0.8)]";
+            text.className = "text-8xl sm:text-9xl font-black font-orbitron text-bx-green animate-pop drop-shadow-[0_0_35px_rgba(0,255,102,0.8)]";
             subtext.innerText = "3... 2... 1... GO SHOOT!";
-            soundBeepLow();
+            soundClick();
 
             if (!state.isTimerRunning) {
-                toggleTimer(); // Auto start timer if not running
+                toggleTimer();
             }
 
-            countdownTimer = setInterval(() => {
+            countdownInterval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     text.innerText = count;
-                    soundBeepLow();
-                    // Trigger reflow for CSS pop animation
+                    soundClick();
                     text.classList.remove('animate-pop');
                     void text.offsetWidth;
                     text.classList.add('animate-pop');
                 } else if (count === 0) {
                     text.innerText = "GO SHOOT!";
-                    text.className = "text-5xl sm:text-7xl font-black font-mono text-bx-cyan animate-pop drop-shadow-[0_0_40px_rgba(0,229,255,0.9)]";
+                    text.className = "text-5xl sm:text-7xl font-black font-orbitron text-bx-cyan animate-pop drop-shadow-[0_0_40px_rgba(0,229,255,0.9)]";
                     soundGoShoot();
                 } else {
-                    clearInterval(countdownTimer);
+                    clearInterval(countdownInterval);
                     overlay.classList.add('hidden');
                 }
             }, 900);
         }
 
         function cancelCountdown() {
-            if (countdownTimer) clearInterval(countdownTimer);
+            if (countdownInterval) clearInterval(countdownInterval);
             document.getElementById('countdownOverlay').classList.add('hidden');
         }
 
-        // ================= RESET ALL =================
         function confirmResetAll() {
-            state.p1Score = 0;
-            state.p2Score = 0;
-            state.p1Fails = 0;
-            state.p2Fails = 0;
+            state.players.forEach(p => {
+                p.score = 0;
+                p.fails = 0;
+            });
             state.currentRound = 1;
             state.history = [];
             state.isMatchEnded = false;
@@ -917,13 +782,12 @@
             updateUI();
             renderHistoryLog();
             closeVictoryModal();
-            showToast("比賽重置", "已重置所有分數、累積發射失敗與對戰紀錄。");
+            showToast("比賽重置", "已成功重置所有選手分數、發射失敗次數與歷史紀錄。");
         }
 
-        // Initialize icons and UI state
+        // Initialization
         window.onload = function() {
-            lucide.createIcons();
-            updateUI();
+            setPlayerCount(2);
         };
     </script>
 </body>
